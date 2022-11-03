@@ -25,6 +25,6 @@ Emily Ortiz :: Updated design doc and devlog
 
 May Qiu :: Updated design doc
 
-Diana Akhmedova :: Updated design doc and devlog
+Diana Akhmedova :: Updated design doc, README, and devlog
                    Created app and __init__.py
 ==============================================================
