@@ -1,0 +1,30 @@
+DEM_PUMPKINS
+Emily Ortiz
+May Qiu
+Diana Akhmedova
+pd7
+---------------------
+<DESCRIPTION>
+
+
+2022-11-01
+--------------------------------------------------------------
+Emily Ortiz :: Updated design doc
+               Created README.md file
+
+May Qiu :: Updated design doc
+
+Diana Akhmedova :: Updated design doc and README
+                   Created .gigignore, devlog.txt, and requirements.txt files
+==============================================================
+
+2022-11-02
+--------------------------------------------------------------
+Emily Ortiz :: Updated design doc and devlog
+               Created design_wiki.pdf and flag.jpg
+
+May Qiu :: Updated design doc
+
+Diana Akhmedova :: Updated design doc and devlog
+                   Created app and __init__.py
+==============================================================
