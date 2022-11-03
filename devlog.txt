@@ -27,4 +27,10 @@ May Qiu :: Updated design doc
 
 Diana Akhmedova :: Updated design doc, README, and devlog
                    Created app and __init__.py
+                   
+Changes to design.pdf:
+- updated site map
+- added more html files
+- clarified how entries would be created/edited
+- reassigned tasks
 ==============================================================
