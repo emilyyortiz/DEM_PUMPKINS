@@ -1,36 +1,64 @@
-DEM_PUMPKINS
+DEM PUMPKINS
+Diana Akhmedova
 Emily Ortiz
 May Qiu
-Diana Akhmedova
-pd7
+pd 7
 ---------------------
-<DESCRIPTION>
+<Project Title/Description>
 
 
-2022-11-01
+ ______   ______   __   __   __       ______   _______     
+/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
+\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
+ \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\ 
+  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/ 
+   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \ 
+    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
+==============================================================
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+emilyO -- 2022-11-01
 --------------------------------------------------------------
-Emily Ortiz :: Updated design doc
-               Created README.md file
-
-May Qiu :: Updated design doc
-
-Diana Akhmedova :: Updated design doc and README
-                   Created .gigignore, devlog.txt, and requirements.txt files
+created repo, README.md
 ==============================================================
 
-2022-11-02
+dianaA -- 2022-11-01
 --------------------------------------------------------------
-Emily Ortiz :: Updated design doc and devlog
-               Created design_wiki.pdf and flag.jpg
+created .gitignore, devlog.txt, requirements.txt
+update README.md
+==============================================================
 
-May Qiu :: Updated design doc
+emilyO -- 2022-11-02
+--------------------------------------------------------------
+added design_wiki.pdf
+updated devlog
+added flag.jpg
+==============================================================
 
-Diana Akhmedova :: Updated design doc, README, and devlog
-                   Created app and __init__.py
-                   
-Changes to design.pdf:
+dianaA -- 2022-11-02
+--------------------------------------------------------------
+update README.md
+created app and __init__.py
+==============================================================
+
+dianaA -- 2022-11-03
+--------------------------------------------------------------
+update devlog
+==============================================================
+
+emilyO -- 2022-11-03
+--------------------------------------------------------------
+added design.pdf
+changes to design.pdf:
 - updated site map
 - added more html files
 - clarified how entries would be created/edited
 - reassigned tasks
+update devlog
+==============================================================
+
+emilyO -- 2022-11-07 13:11
+--------------------------------------------------------------
+reformatted devlog
 ==============================================================
