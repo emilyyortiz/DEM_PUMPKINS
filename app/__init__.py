@@ -40,14 +40,8 @@ def login():
         session['username'] = request.form['username'], request.form['password'] # create a session/cookie w/username+password
         print("session started")
         return redirect("/user_blog") # redirects to welcome, user is logged in and in session
-    # if password is wrong
-    elif (username == expected_user):
-        return render_template( 'login.html', error_msg="Password is incorrect.") # displays login page w/error_msg
-    # if username is wrong
-    elif (password == expected_pass):
-        return render_template( 'login.html', error_msg="Username is incorrect.") # displays login page w/error_msg
-    # both username and password are wrong
-    return render_template('login.html', error_msg="Input a correct username and password.") # displays login page w/error_msg
+    # if password is wrong or username is wrong
+    return render_template('login.html', error_msg="Please enter a correct username and password combination") # displays login page w/error_msg
 
 @app.route("/create_account", methods=['GET', 'POST'])
 def create_account():
