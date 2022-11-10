@@ -1,0 +1,35 @@
+<!--
+  DEM PUMPKINS: Emily Ortiz, Diana Akhmedova, May Qiu
+  SoftDev
+  P00 -- Move Slowly and Fix Things
+  2022-11-09
+  time spent: 3.5 hours
+-->
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>CREATE ACCOUNT PAGE</title>
+    </head>
+
+    <body>
+        <h1>DEM PUMPKINS: Emily Ortiz, May Qiu, Diana Akhmedova</h1>
+
+        <h3>Create a unique username, password, and blog name.</h3>
+
+        <form action="/create_account" method="post">
+            <input type="text" name="username">
+            <input type="text" name="password">
+            <input type="text" name="blogname">
+            <input type="submit" name="sub1" value="Submit">
+        </form>
+
+        <!-- button to log out -->
+        <a href="/login" name="login" value="Login"><button>Login</button></a>
+
+        <p> {{ error_msg }} </p>
+    </body>
+
+</html>

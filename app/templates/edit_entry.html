@@ -1,0 +1,42 @@
+<!--
+DEM PUMPKINS: Emily Ortiz, Diana Akhmedova, May Qiu
+SoftDev
+P00 -- Move Slowly and Fix Things
+2022-11-09
+time spent: __ hours
+-->
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Edit Entry</title>
+</head>
+
+<body>
+    
+    <!-- button to go back to blog -->
+    <a href="/user_blog" name="userblog" value="userblog"><button>Return to Blog</button></a>
+    <!-- button to log out -->
+    <a href="/logout" name="logout" value="Logout"><button>Logout</button></a>
+
+    <h3>Instructions:</h3>
+    <p>Submit the entry ID of the entry you want to edit, new title, and new paragraph.</p>
+
+    <h3>Important:</h3>
+    <p> If you want to include old content in your update, 
+        you have to copy and paste it yourself. 
+        Whatever is submitted in the form replaces the old entry.</p>
+
+    <!-- return to userblog after form submission -->
+    <form action="/user_blog" method="post">
+        <input type="text" name="entry_id">
+        <input type="text" name="title">
+        <input type="text" name="paragraph">
+        <input type="submit" name="sub1">
+    </form>
+
+</body>
+
+</html>
