@@ -17,6 +17,11 @@ pd 7
 ==============================================================
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+design_wiki0.pdf feedback (reviewed in class 2022-10-28)
+reviewed by: Spooky Ghosts
+- how do you know target ship date?
+- when a change is made, is a new version of the HTML file made?
+- how would you know exactly where the edit was made?
 
 emilyO -- 2022-11-01
 --------------------------------------------------------------
@@ -29,9 +34,23 @@ created .gitignore, devlog.txt, requirements.txt
 update README.md
 ==============================================================
 
+design_wiki1.pdf feedback (reviewed in class 2022-11-2)
+reviewed by: POPEYES
+- show the relationships between files
+- easily understandable site map
+- how are you storing entries?
+- what is the process for editing entries?
+- are you making a new html file for each entry? myb use templates
+- the app doesn't need to constantly run bc data is always stored in the database
+- new entries will be stored in database
+reviewed by: WeLoveTrees
+- multiple python files should be used
+- look into if you can add a table within a table so you don't need a table for each article
+- put images in the static folder
+
 emilyO -- 2022-11-02
 --------------------------------------------------------------
-added design_wiki.pdf
+added design_wiki.pdf (2022-11-10: now named design_wiki0.pdf)
 updated devlog
 added flag.jpg
 ==============================================================
@@ -49,7 +68,7 @@ update devlog
 
 emilyO -- 2022-11-03
 --------------------------------------------------------------
-added design.pdf
+added design.pdf (2022-11-10: now named design2.pdf)
 changes to design.pdf:
 - updated site map
 - added more html files
@@ -104,9 +123,18 @@ emilyO -- 2022-11-10 13:20
 fixed bug w/ create_entry.html and edit_entry.html
 ==============================================================
 
-emilyO -- 2022-11-10 17:45
+emilyO -- 2022-11-10 21:45
 --------------------------------------------------------------
 added design_wiki1.pdf
 fixed design doc names
 updated devlog
+==============================================================
+
+emilyO -- 2022-11-10 22:15
+--------------------------------------------------------------
+added latest design doc (v3)
+- new flowchart
+- database.py
+- changes to logins table in db
+added design doc feedback to devlog
 ==============================================================
