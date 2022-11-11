@@ -138,3 +138,25 @@ added latest design doc (v3)
 - changes to logins table in db
 added design doc feedback to devlog
 ==============================================================
+
+dianaA -- 2022-11-11 00:05
+--------------------------------------------------------------
+edit latest design doc (v3)
+- new flowchart
+made create_account function that only allows the creation of 
+accounts with a unique username
+edited login function to allow for made accounts to login with
+correct username and password
+added to devlog
+==============================================================
+
+mayQ -- 2022-11-11 00:05
+--------------------------------------------------------------
+edit latest design doc (v3)
+- new flowchart
+made create_account function that only allows the creation of 
+accounts with a unique username
+edited login function to allow for made accounts to login with
+correct username and password
+added to devlog
+==============================================================

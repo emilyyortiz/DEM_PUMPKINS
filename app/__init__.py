@@ -6,6 +6,9 @@
 
 from flask import Flask, render_template,request, redirect, session
 import os
+from database import check_login
+from database import add_login
+from database import authenticate
 
 app = Flask(__name__)
 
@@ -17,6 +20,7 @@ expected_user = "Elmo"
 expected_pass = "1234"
 
 user = "" # global var, meant to be inputed username later, doesn't work
+counter = 0 # global var, meant to be the number for the newest html file
 
 @app.route("/")
 def index():
@@ -27,6 +31,7 @@ def index():
     # user is not in session
     return redirect("/login") # redirects to login
 
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     username = request.form.get('username') # username user inputs on form
@@ -36,30 +41,41 @@ def login():
     print(user)
 
     # if username and password are correct
-    if (username == expected_user) and (password == expected_pass):
+    if (authenticate(username, password)):
         session['username'] = request.form['username'], request.form['password'] # create a session/cookie w/username+password
         print("session started")
         return redirect("/user_blog") # redirects to welcome, user is logged in and in session
+
     # if password is wrong or username is wrong
     return render_template('login.html', error_msg="Please enter a correct username and password combination") # displays login page w/error_msg
+
 
 @app.route("/create_account", methods=['GET', 'POST'])
 def create_account():
     username = request.form.get('username') # username user inputs on form
     password = request.form.get('password') # password user inputs on form
     blogname = request.form.get('blogname') # blog name user inputs on form
+    htmlfile = str(counter) + ".html"
 
     # if any field is empty
     if ((username == "") or (password == "") or (blogname == "")):
         return render_template( 'create_account.html', error_msg="Fill in any blank fields." ) # displays create_account page w/error_msg
-    # # if username is not unique / the same as another user's username (check in database)
-    # if ():
-    #     return render_template( 'create_account.html', error_msg="Username unavailable. Please pick a different username.") # displays create_account page w/error_msg
-    # # username is unique
+    
+    # if username is not unique / the same as another user's username (check in database)
+    if (check_login(username, password, blogname, htmlfile)):
+        return render_template( 'create_account.html', error_msg="Username unavailable. Please pick a different username.") # displays create_account page w/error_msg
+    
+    # username is unique
     if (request.method == 'POST'):
         if (request.form.get('sub1') == 'Submit'):
+            add_login(username, password, blogname, htmlfile)
+            add_counter(counter)
             return redirect("/login")
     return render_template('create_account.html', error_msg="") # displays login page
+
+
+def add_counter(counter1):
+    counter = counter1 + 1
 
 @app.route("/user_blog")
 def user_blog():
