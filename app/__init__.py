@@ -9,6 +9,9 @@ import os
 from database import check_login
 from database import add_login
 from database import authenticate
+from database import find_id
+from database import new_blog
+from database import add_entry
 
 app = Flask(__name__)
 
@@ -16,12 +19,12 @@ app = Flask(__name__)
 # code doesn't work without it
 app.secret_key = os.urandom(32)
 
-expected_user = "Elmo"
-expected_pass = "1234"
-
 user = "" # global var, meant to be inputed username later, doesn't work
 counter = 0 # global var, meant to be the number for the newest html file
 
+u_name = ""
+b_name = ""
+html_file = ""
 @app.route("/")
 def index():
     # if user is already in session
@@ -68,6 +71,8 @@ def create_account():
     # username is unique
     if (request.method == 'POST'):
         if (request.form.get('sub1') == 'Submit'):
+            u_name = username # NOT WORKING !!!!!
+            b_name = blogname # NOT WORKING !!!!!
             add_login(username, password, blogname, htmlfile)
             add_counter(counter)
             return redirect("/login")
@@ -77,17 +82,35 @@ def create_account():
 def add_counter(counter1):
     counter = counter1 + 1
 
+
 @app.route("/user_blog")
 def user_blog():
-    return render_template('Elmo.html') # temp blog, will direct to each user's blog
+    htmlfile = str(u_name) + ".html" # NOT WORKING !!!!!
+    html_file = htmlfile # NOT WORKING !!!!!
+    new_blog(htmlfile)
+    print(u_name)
+    print(htmlfile)
+    return render_template('htmlfile') # temp blog, will direct to each user's blog
+
 
 @app.route("/create_entry")
 def create_entry():
+    username = u_name
+    blogname = b_name
+    title = request.form.get('title') # title user inputs on form
+    entryid = find_id(u_name)
+    paragraph = request.form.get('paragraph') # paragraph user inputs on form
+    
+    if (request.method == 'POST'):
+        if (request.form.get('sub1') == 'Submit'):
+            add_entry(username, blogname, html_file, entryid, title, paragraph)
     return render_template('create_entry.html')
+
 
 @app.route("/edit_entry")
 def edit_entry():
     return render_template("edit_entry.html")
+
 
 @app.route("/logout", methods=['GET', 'POST'])
 def logout():
@@ -95,10 +118,12 @@ def logout():
     print("user is NOT in session")
     return redirect("/login") # redirects to login page
 
+
 # Not in use yet:
 @app.route("/explore")
 def explore():
      return render_template('explore.html')
+
 
 if __name__ == "__main__":
     app.debug = True

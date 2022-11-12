@@ -160,3 +160,17 @@ edited login function to allow for made accounts to login with
 correct username and password
 added to devlog
 ==============================================================
+
+dianaA -- 2022-11-12 01:10
+--------------------------------------------------------------
+attempted to fix create_entry, still need to test
+figured out how to create new html files in python
+added to devlog
+==============================================================
+
+mayQ -- 2022-11-12 01:10
+--------------------------------------------------------------
+attempted to fix create-entry, still need to test
+figured out how to create new html files in python
+added to devlog
+==============================================================
