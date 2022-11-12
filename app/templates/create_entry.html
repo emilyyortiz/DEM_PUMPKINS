@@ -10,27 +10,27 @@ time spent: __ hours
 
 <html>
 
-<head>
-    <title>Create Entry</title>
-</head>
+    <head>
+        <title>Create Entry</title>
+    </head>
 
-<body>
-    
-    <!-- button to go back to blog -->
-    <a href="/user_blog" name="userblog" value="userblog"><button>Return to Blog</button></a>
-    <!-- button to log out -->
-    <a href="/logout" name="logout" value="Logout"><button>Logout</button></a>
+    <body>
+        
+        <!-- button to go back to blog -->
+        <a href="/user_blog" name="userblog" value="userblog"><button>Return to Blog</button></a>
+        <!-- button to log out -->
+        <a href="/logout" name="logout" value="Logout"><button>Logout</button></a>
 
-    <h3>Instructions</h3>
-    <p>Enter the title and paragraph of your entry</p>
+        <h3>Instructions</h3>
+        <p>Enter the title and paragraph of your entry</p>
 
-    <!-- return to userblog after form submission -->
-    <form action="/user_blog" method="get">
-        <input type="text" name="title">
-        <input type="text" name="paragraph">
-        <input type="submit" name="sub1">
-    </form>
+        <!-- return to userblog after form submission -->
+        <form action="/create_entry" method="post">
+            <input type="text" name="title">
+            <input type="text" name="paragraph">
+            <input type="submit" name="sub2" value="Submit">
+        </form>
 
-</body>
+    </body>
 
 </html>

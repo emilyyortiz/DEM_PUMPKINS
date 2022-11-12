@@ -12,6 +12,10 @@ from database import authenticate
 from database import find_id
 from database import new_blog
 from database import add_entry
+from database import ret_blog
+from database import ret_html
+from database import ret_title
+from database import ret_paragraph
 
 app = Flask(__name__)
 
@@ -22,9 +26,6 @@ app.secret_key = os.urandom(32)
 user = "" # global var, meant to be inputed username later, doesn't work
 counter = 0 # global var, meant to be the number for the newest html file
 
-u_name = ""
-b_name = ""
-html_file = ""
 @app.route("/")
 def index():
     # if user is already in session
@@ -46,6 +47,7 @@ def login():
     # if username and password are correct
     if (authenticate(username, password)):
         session['username'] = request.form['username'], request.form['password'] # create a session/cookie w/username+password
+        #u_name = session['username']
         print("session started")
         return redirect("/user_blog") # redirects to welcome, user is logged in and in session
 
@@ -66,13 +68,11 @@ def create_account():
     
     # if username is not unique / the same as another user's username (check in database)
     if (check_login(username, password, blogname, htmlfile)):
-        return render_template( 'create_account.html', error_msg="Username unavailable. Please pick a different username.") # displays create_account page w/error_msg
+        return render_template( 'create_account.html', error_msg="Username unavailable. Please pick a different username." ) # displays create_account page w/error_msg
     
     # username is unique
     if (request.method == 'POST'):
         if (request.form.get('sub1') == 'Submit'):
-            u_name = username # NOT WORKING !!!!!
-            b_name = blogname # NOT WORKING !!!!!
             add_login(username, password, blogname, htmlfile)
             add_counter(counter)
             return redirect("/login")
@@ -85,25 +85,34 @@ def add_counter(counter1):
 
 @app.route("/user_blog")
 def user_blog():
-    htmlfile = str(u_name) + ".html" # NOT WORKING !!!!!
-    html_file = htmlfile # NOT WORKING !!!!!
+    temp = session['username'][0]
+    htmlfile = str(temp) + ".html"
+    b_name = ret_blog(temp)
+    t_name = ret_title(temp)
+    p_name = ret_paragraph(temp)
     new_blog(htmlfile)
-    print(u_name)
+    print(temp)
+    print(session['username'])
+    print(session['username'][0])
     print(htmlfile)
-    return render_template('htmlfile') # temp blog, will direct to each user's blog
+    return render_template(str(htmlfile), blogname=b_name, title=t_name, paragraph=p_name) # temp blog, will direct to each user's blog
 
 
-@app.route("/create_entry")
+@app.route("/create_entry", methods=['GET', 'POST'])
 def create_entry():
-    username = u_name
-    blogname = b_name
+    username = str(session['username'][0])
+    blogname = ret_blog(username)
+    htmlfile = ret_html(username)
     title = request.form.get('title') # title user inputs on form
-    entryid = find_id(u_name)
+    print(title)
+    entryid = find_id(username)
     paragraph = request.form.get('paragraph') # paragraph user inputs on form
+    print(paragraph)
     
     if (request.method == 'POST'):
-        if (request.form.get('sub1') == 'Submit'):
-            add_entry(username, blogname, html_file, entryid, title, paragraph)
+        if (request.form.get('sub2') == 'Submit'):
+            add_entry(username, blogname, htmlfile, entryid, title, paragraph)
+            return redirect("/user_blog")
     return render_template('create_entry.html')
 
 

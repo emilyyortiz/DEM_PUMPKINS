@@ -7,8 +7,11 @@
 ## use "?" as a replacement string in sqlite tables
 
 import sqlite3   # enable control of an sqlite database
+import os
 
 DB_FILE="tables.db"
+
+u_name = ""
 
 db = sqlite3.connect(DB_FILE, check_same_thread=False) # open if file exists, otherwise create
 c = db.cursor()               # facilitate db ops -- you will use cursor to trigger db events
@@ -20,6 +23,7 @@ c.execute("DROP TABLE if exists content")
 c.execute("CREATE TABLE content(user TEXT, blog_name TEXT, html_file TEXT, entry_id TEXT, title TEXT, paragraph TEXT)")
 
 c.execute(f"INSERT into users VALUES('?', '?', '?', '?')")
+c.execute(f"INSERT into content VALUES('!', '!', '!', '!', '!', '!')")
 
 
 def check_login(user, pwd, blog_name, html_file):
@@ -32,7 +36,9 @@ def check_login(user, pwd, blog_name, html_file):
         temp = user_name[2:len(user_name)-3]
         ex = c.execute("SELECT * FROM users")
         fetch = ex.fetchall()
+        print("Printing Fetch_0")
         print(fetch)
+        print("\n")
         
         if (user == temp):
             print("Username already taken.")
@@ -63,7 +69,9 @@ def authenticate(user, pwd):
         temp = user_name[2:len(user_name)-3]
         ex = c.execute("SELECT * FROM users")
         fetch = ex.fetchall()
+        print("Printing Fetch_1")
         print(fetch)
+        print("\n")
         
         if (user == temp):
             temp_x = x
@@ -73,7 +81,9 @@ def authenticate(user, pwd):
     temp = pass_word[2:len(pass_word)-3]
     ex = c.execute("SELECT * FROM users")
     fetch = ex.fetchall()
+    print("Printing Fetch_2")
     print(fetch)
+    print("\n")
         
     if (pwd == temp):
         auth_pass = True
@@ -89,30 +99,85 @@ def find_id(user):
     print(num_id)
     
 
+def ret_blog(user):
+    getting_blog = f"SELECT blog_name FROM users WHERE '{user}' = user"
+    command = c.execute(getting_blog)
+    blogs = command.fetchall()
+    temp = str(blogs)
+    temp = temp[3:]
+    temp = temp[::-1]
+    temp = temp[4:]
+    temp = temp[::-1]
+    print(temp)
+    return temp
+
+
+def ret_html(user):
+    getting_html = f"SELECT html_file FROM users WHERE '{user}' = user"
+    command = c.execute(getting_html)
+    htmls = command.fetchall()
+    temp = str(htmls)
+    temp = temp[3:]
+    temp = temp[::-1]
+    temp = temp[4:]
+    temp = temp[::-1]
+    print(temp)
+    return temp
+
+
+def ret_title(user):
+    getting_username = f"SELECT title FROM content WHERE '{user}' = user"
+    command = c.execute(getting_username)
+    usernames = command.fetchall()
+    temp = str(usernames)
+    temp = temp[3:]
+    temp = temp[::-1]
+    temp = temp[4:]
+    temp = temp[::-1]
+    print(temp)
+    return temp
+
+
+def ret_paragraph(user):
+    getting_paragraph = f"SELECT paragraph FROM content WHERE '{user}' = user"
+    command = c.execute(getting_paragraph)
+    paragraphs = command.fetchall()
+    temp = str(paragraphs)
+    temp = temp[3:]
+    temp = temp[::-1]
+    temp = temp[4:]
+    temp = temp[::-1]
+    print(temp)
+    return temp
+
+
 def new_blog(html_file):
-    file_html = open(html_file, "w")
+    path = "/Users/katni/DEM_PUMPKINS/app/templates"
+    file_html = open(os.path.join(path, html_file), "w")
     file_html.write(
-     '''<html>
-            <head>
-                <title>'{blogname}'</title>
-            </head>
+    '''
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>{{blogname}}</title>
+        </head>
 
-            <body>
-                <h1>'{blogname}'</h1>
+        <body>
+            <h1>{{blogname}}</h1>
 
-                <!-- button to create entry -->
-                <a href="/create_entry" name="create_entry" value="create_entry"><button>Create Entry</button></a>
-                <!-- button to edit entry -->
-                <a href="/edit_entry" name="edit_entry" value="edit_entry"><button>Edit Entry</button></a>
-                <!-- button to explore other's blogs -->
-                <a href="/explore" name="explore" value="explore"><button>Explore</button></a>
-                <!-- button to log out -->
-                <a href="/logout" name="logout" value="Logout"><button>Logout</button></a>
+            <!-- button to create entry -->
+            <a href="/create_entry" name="create_entry" value="create_entry"><button>Create Entry</button></a>
+            <!-- button to edit entry -->
+            <a href="/edit_entry" name="edit_entry" value="edit_entry"><button>Edit Entry</button></a>
+            <!-- button to explore other's blogs -->
+            <a href="/explore" name="explore" value="explore"><button>Explore</button></a>
+            <!-- button to log out -->
+            <a href="/logout" name="logout" value="Logout"><button>Logout</button></a>
 
-                <h2>'{title}'</h2>
-                <p>'{paragraph}'</p> 
-            </body>
-        </html>'''
+            <h2>{{title}}</h2>
+            <p>{{paragraph}}</p> 
+        </body>
+    </html>'''
     )
 
 

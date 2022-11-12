@@ -170,7 +170,14 @@ added to devlog
 
 mayQ -- 2022-11-12 01:10
 --------------------------------------------------------------
-attempted to fix create-entry, still need to test
+attempted to fix create_entry, still need to test
 figured out how to create new html files in python
+added to devlog
+==============================================================
+
+dianaA -- 2022-11-12 14:55
+--------------------------------------------------------------
+fixed writing to the html file
+worked on create_entry, only works with one entry right now
 added to devlog
 ==============================================================
