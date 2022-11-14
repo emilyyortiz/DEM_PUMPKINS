@@ -142,26 +142,26 @@ def ret_title(user):
     getting_username = f"SELECT title FROM content WHERE '{user}' = user"
     command = c.execute(getting_username)
     usernames = command.fetchall()
-    temp = str(usernames)
+    # temp = str(usernames)
     # temp = temp[3:]
     # temp = temp[::-1]
     # temp = temp[4:]
     # temp = temp[::-1]
-    print(temp)
-    return temp # returns array of all the titles
+    # print(temp)
+    return usernames # returns array of all the titles
  
 
 def ret_paragraph(user):
     getting_paragraph = f"SELECT paragraph FROM content WHERE '{user}' = user"
     command = c.execute(getting_paragraph)
     paragraphs = command.fetchall()
-    temp = str(paragraphs)
+    # temp = str(paragraphs)
     # temp = temp[3:]
     # temp = temp[::-1]
     # temp = temp[4:]
     # temp = temp[::-1]
-    print(temp)
-    return temp # returns array of all the paragraphs
+    # print(temp)
+    return paragraphs # returns array of all the paragraphs
 
 
 def ret_paragraph_maybe(user):
@@ -189,7 +189,7 @@ def new_blog(html_file):
               # str(os.path.expanduser('~'))
     file_html = open(os.path.join(home_path, html_file), "w") # w stands for write
     # this lets us write into the file
-    file_html.write(
+    html_content = \
     '''
     <!DOCTYPE html>
     <html>
@@ -208,35 +208,38 @@ def new_blog(html_file):
             <a href="/explore" name="explore" value="explore"><button>Explore</button></a>
             <!-- button to log out -->
             <a href="/logout" name="logout" value="Logout"><button>Logout</button></a>
-    ''')
+    '''
 
     list_titles = ret_title("mqiu30@stuy.edu")
     list_paragraphs = ret_paragraph("mqiu30@stuy.edu")
     for x in range(len(list_titles)):
         temp = list_titles[x]
-        temp = temp[3:]
+        temp = str(temp)
+        temp = temp[2:]
         temp = temp[::-1]
-        temp = temp[4:]
+        temp = temp[3:]
         temp = temp[::-1]
         
         p_temp = list_paragraphs[x]
+        p_temp = str(p_temp)
+        p_temp = p_temp[2:]
+        p_temp = p_temp[::-1]
         p_temp = p_temp[3:]
         p_temp = p_temp[::-1]
-        p_temp = p_temp[4:]
-        p_temp = p_temp[::-1]
 
-        file_html.write(
+        html_content += \
         f'''
         <hr>
         <h2>{temp}</h2>
         <p>{p_temp}</p>
-        ''')
+        '''
            
-    file_html.write(
+    html_content += \
     '''
         </body>
     </html>'''
-    )
+    
+    file_html.write(html_content)
 
 '''
 <hr> <!-- horizontal line -->
