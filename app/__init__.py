@@ -94,7 +94,7 @@ def user_blog():
     b_name = ret_blog(temp) # blog name
     # t_name = ret_title(temp) # title of entries
     # p_name = ret_paragraph(temp) # paragraph name
-    new_blog(htmlfile)
+    new_blog(htmlfile, temp)
     # print(temp)
     # print(session['username'])
     # print(session['username'][0])
@@ -129,7 +129,8 @@ def edit_entry():
     username = str(session['username'][0])
     htmlfile = username + ".html" # name of html file
     title = request.args.get('title') # title user inputs on form
-    entryid = find_id((session['username'][0]))
+    #entryid = find_id((session['username'][0]))
+    entryid = request.args.get('entry_id')
     paragraph = request.args.get('paragraph') # paragraph user inputs on form
 
     if (request.method == 'GET'):
@@ -137,7 +138,7 @@ def edit_entry():
             replace_entry(username, entryid, title, paragraph)
     #         for x in range(len()):
     #             add_entry(username, blogname, htmlfile, entryid, title, paragraph)
-            new_blog(htmlfile)
+            new_blog(htmlfile, username)
             return redirect("/user_blog")
     return render_template("edit_entry.html")
 

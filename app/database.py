@@ -106,7 +106,10 @@ def find_id(user):
     ex = c.execute(f"SELECT * FROM content WHERE user = '{user}'")
     allusers = ex.fetchall()
     num_id = len(allusers)
+    print("\nPrintng Entry Id:")
+    print(num_id)
     return num_id
+
 
 # tell us latest entry id +1 for user
 def add_id(user):
@@ -114,6 +117,7 @@ def add_id(user):
     allusers = ex.fetchall()
     num_id = len(allusers) + 1
     return num_id
+
 
 # returns blog name for a user
 def ret_blog(user):
@@ -127,6 +131,7 @@ def ret_blog(user):
     temp = temp[::-1]
     print(temp)
     return temp
+
 
 # returns html file for a user
 def ret_html(user):
@@ -167,6 +172,7 @@ def ret_paragraph_maybe(user):
     print("about to print the cut allusers")
     print(allusers)
 
+
 def ret_title_maybe(user): # returns all the titles for a user's blog
     ex = c.execute(f"SELECT title FROM content WHERE user = '{user}'")
     allusers = ex.fetchall()
@@ -175,7 +181,7 @@ def ret_title_maybe(user): # returns all the titles for a user's blog
         print(allusers[x])
 
 
-def new_blog(html_file):
+def new_blog(html_file, user):
     home_path = str(Path('~').expanduser()) + "/DEM_PUMPKINS/app/templates/"
               # str(Path.home())
               # str(os.path.expanduser('~'))
@@ -202,8 +208,8 @@ def new_blog(html_file):
             <a href="/logout" name="logout" value="Logout"><button>Logout</button></a>
     '''
 
-    list_titles = ret_title("mqiu30@stuy.edu")
-    list_paragraphs = ret_paragraph("mqiu30@stuy.edu")
+    list_titles = ret_title(user)
+    list_paragraphs = ret_paragraph(user)
     for x in range(len(list_titles)):
         temp = list_titles[x]
         temp = str(temp)
@@ -245,7 +251,7 @@ if no entries, entry_id command will execute it as 0
 if yes entries, entry_id looks for latest user entry's entry_id and adds 1
 '''
 
-def replace_entry(user, entry_id,title,paragraph):
+def replace_entry(user, entry_id, title, paragraph):
     print("starting to replace entry")
     # paragraphs = c.execute(f"SELECT paragraph FROM content WHERE user = '{user}'")
     # all_paragraphs = paragraphs.fetchall()
