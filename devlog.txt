@@ -181,3 +181,11 @@ fixed writing to the html file
 worked on create_entry, only works with one entry right now
 added to devlog
 ==============================================================
+
+mayQ -- 2022-11-13 23:03
+--------------------------------------------------------------
+got edit_entry working, but it is hardcorded to only mqiu30@stuy.edu atm
+got create_entry working
+All worked together
+added to devlog
+==============================================================

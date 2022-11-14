@@ -10,6 +10,7 @@ from database import check_login
 from database import add_login
 from database import authenticate
 from database import find_id
+from database import add_id
 from database import new_blog
 from database import add_entry
 from database import ret_blog
@@ -18,6 +19,7 @@ from database import ret_title
 from database import ret_paragraph
 from database import ret_title_maybe
 from database import ret_paragraph_maybe
+from database import replace_entry
 
 app = Flask(__name__)
 
@@ -111,7 +113,7 @@ def create_entry():
     htmlfile = ret_html(username)
     title = request.form.get('title') # title user inputs on form
     print(title)
-    entryid = find_id(username)
+    entryid = add_id(username)
     paragraph = request.form.get('paragraph') # paragraph user inputs on form
     print(paragraph)
     
@@ -124,6 +126,19 @@ def create_entry():
 
 @app.route("/edit_entry")
 def edit_entry():
+    username = str(session['username'][0])
+    htmlfile = username + ".html" # name of html file
+    title = request.args.get('title') # title user inputs on form
+    entryid = find_id((session['username'][0]))
+    paragraph = request.args.get('paragraph') # paragraph user inputs on form
+
+    if (request.method == 'GET'):
+        if (request.args.get('sub1') == 'Submit'):
+            replace_entry(username, entryid, title, paragraph)
+    #         for x in range(len()):
+    #             add_entry(username, blogname, htmlfile, entryid, title, paragraph)
+            new_blog(htmlfile)
+            return redirect("/user_blog")
     return render_template("edit_entry.html")
 
 

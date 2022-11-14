@@ -101,15 +101,19 @@ def authenticate(user, pwd):
         return True
 
 
-# finds latest entry id for user
-# adds 1 to it and prints
+# tells us latest entry id for user
 def find_id(user):
     ex = c.execute(f"SELECT * FROM content WHERE user = '{user}'")
     allusers = ex.fetchall()
-    num_id = len(allusers) + 1
-    print(num_id)
-    # return num_id
+    num_id = len(allusers)
+    return num_id
 
+# tell us latest entry id +1 for user
+def add_id(user):
+    ex = c.execute(f"SELECT * FROM content WHERE user = '{user}'")
+    allusers = ex.fetchall()
+    num_id = len(allusers) + 1
+    return num_id
 
 # returns blog name for a user
 def ret_blog(user):
@@ -142,12 +146,6 @@ def ret_title(user):
     getting_username = f"SELECT title FROM content WHERE '{user}' = user"
     command = c.execute(getting_username)
     usernames = command.fetchall()
-    # temp = str(usernames)
-    # temp = temp[3:]
-    # temp = temp[::-1]
-    # temp = temp[4:]
-    # temp = temp[::-1]
-    # print(temp)
     return usernames # returns array of all the titles
  
 
@@ -155,12 +153,6 @@ def ret_paragraph(user):
     getting_paragraph = f"SELECT paragraph FROM content WHERE '{user}' = user"
     command = c.execute(getting_paragraph)
     paragraphs = command.fetchall()
-    # temp = str(paragraphs)
-    # temp = temp[3:]
-    # temp = temp[::-1]
-    # temp = temp[4:]
-    # temp = temp[::-1]
-    # print(temp)
     return paragraphs # returns array of all the paragraphs
 
 
@@ -227,10 +219,11 @@ def new_blog(html_file):
         p_temp = p_temp[3:]
         p_temp = p_temp[::-1]
 
+        entry_id = x + 1
         html_content += \
         f'''
         <hr>
-        <h2>{temp}</h2>
+        <h2>{entry_id}: {temp}</h2>
         <p>{p_temp}</p>
         '''
            
@@ -241,26 +234,9 @@ def new_blog(html_file):
     
     file_html.write(html_content)
 
-'''
-<hr> <!-- horizontal line -->
-<h2 class={{entry_id}}>{{title}}</h2>
-<p class={{entry_id}}>{{paragraph}}</p>
-
-- (above) String ??? that will be added upon every new entry
-
-old_text = soup.find("t", {"id": entry_id})
-  
-new_text = old_text.find(text=re.compile(
-    'Geeks For Geeks')).replace_with('Vinayak Rai')
-'''
-
-
-
-
-
 def add_entry(user, blog_name, html_file, entry_id, title, paragraph):
     c.execute(f"INSERT into content VALUES('{user}', '{blog_name}', '{html_file}', '{entry_id}', '{title}', '{paragraph}')")
-    
+
 
 '''
 entry_id = 0 initially
@@ -268,6 +244,26 @@ check if there are any entries in content with current user's username
 if no entries, entry_id command will execute it as 0
 if yes entries, entry_id looks for latest user entry's entry_id and adds 1
 '''
+
+def replace_entry(user, entry_id,title,paragraph):
+    print("starting to replace entry")
+    # paragraphs = c.execute(f"SELECT paragraph FROM content WHERE user = '{user}'")
+    # all_paragraphs = paragraphs.fetchall()
+    # titles = c.execute(f"SELECT title FROM content WHERE user = '{user}'")
+    # all_titles = titles.fetchall()
+    temp_user = user
+    temp_entry_id = entry_id
+    temp_title = title
+    temp_paragraph = paragraph
+    c.execute(f"UPDATE content SET title = '{temp_title}' WHERE entry_id = '{temp_entry_id}' AND user = '{temp_user}' ")
+    c.execute(f"UPDATE content SET paragraph = '{temp_paragraph}' WHERE entry_id = '{temp_entry_id}' AND user = '{temp_user}'")
+    # c.execute("UPDATE content SET title = {'test replacement title'} WHERE entry_id = '1' AND user = 'mqiu30@stuy.edu' ")
+    # c.execute("UPDATE content SET paragraph = 'test replacement para' WHERE entry_id = '1' AND user = 'mqiu30@stuy.edu'")
+    print("about to print content databasewqdqwdqwd")
+    ex_1 = c.execute("SELECT * FROM content")
+    fetch_1 = ex_1.fetchall()
+    print(fetch_1)
+    
 
 db.commit() # save changes
 authenticate("?", "?")
