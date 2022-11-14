@@ -269,6 +269,24 @@ def replace_entry(user, entry_id, title, paragraph):
     ex_1 = c.execute("SELECT * FROM content")
     fetch_1 = ex_1.fetchall()
     print(fetch_1)
+
+
+def delete_html(user):
+    home_path = str(Path('~').expanduser()) + "/DEM_PUMPKINS/app/templates/"
+    ex = c.execute(f"SELECT user FROM users")
+    allfiles = ex.fetchall()
+    for x in range(len(allfiles)-1):
+        # print(allfiles[x])
+        temp = allfiles[x+1]
+        temp = str(temp)
+        temp = temp[2:]
+        temp = temp[::-1]
+        temp = temp[3:]
+        temp = temp[::-1]
+        temp = str(temp) + ".html"
+        print(temp)
+        file_html = os.path.join(home_path, temp)
+        os.remove(file_html)
     
 
 db.commit() # save changes

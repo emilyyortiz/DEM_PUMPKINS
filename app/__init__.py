@@ -21,6 +21,7 @@ from database import ret_paragraph
 from database import ret_title_maybe
 from database import ret_paragraph_maybe
 from database import replace_entry
+from database import delete_html
 
 app = Flask(__name__)
 
@@ -157,16 +158,7 @@ def explore():
      return render_template('explore.html')
 
 
-# def delete_html(some_argument):
-#     home_path = str(Path('~').expanduser()) + "/DEM_PUMPKINS/app/templates/"
-#               # str(Path.home())
-#               # str(os.path.expanduser('~'))
-#     file_html = open(os.path.join(home_path, html_file), "w")
-#     os.remove("demofile.txt")
-#     print(some_argument)
-
-
 if __name__ == "__main__":
-    #atexit.register(delete_html, 'some argument')
+    atexit.register(delete_html, 'user')
     app.debug = True
     app.run()
