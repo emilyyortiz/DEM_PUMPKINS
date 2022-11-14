@@ -6,15 +6,19 @@
 
 ## use "?" as a replacement string in sqlite tables
 
-import sqlite3   # enable control of an sqlite database
+from bs4 import BeautifulSoup as bs
+from pathlib import Path
+import sqlite3 # enable control of an sqlite database
 import os
+import re
 
 DB_FILE="tables.db"
+#soup = BeautifulSoup('<p><a href="http://www.foo.com">this if foo</a><a href="http://www.bar.com">this if bar</a></p>')
 
 u_name = ""
 
 db = sqlite3.connect(DB_FILE, check_same_thread=False) # open if file exists, otherwise create
-c = db.cursor()               # facilitate db ops -- you will use cursor to trigger db events
+c = db.cursor() # facilitate db ops -- you will use cursor to trigger db events
 
 c.execute("DROP TABLE if exists users")
 c.execute("CREATE TABLE users(user TEXT, pwd TEXT, blog_name TEXT, html_file TEXT)")
@@ -25,7 +29,8 @@ c.execute("CREATE TABLE content(user TEXT, blog_name TEXT, html_file TEXT, entry
 c.execute(f"INSERT into users VALUES('?', '?', '?', '?')")
 c.execute(f"INSERT into content VALUES('!', '!', '!', '!', '!', '!')")
 
-
+# used when a user is making an account
+# checks if username is available, returns True/False
 def check_login(user, pwd, blog_name, html_file):
     getting_username = f"SELECT user FROM users"
     command = c.execute(getting_username)
@@ -46,10 +51,14 @@ def check_login(user, pwd, blog_name, html_file):
     return False
 
 
+# used after info for new account is approved
+# adds info to database in users table
 def add_login(user, pwd, blog_name, html_file):
     c.execute(f"INSERT into users VALUES('{user}', '{pwd}', '{blog_name}', '{html_file}')")
 
 
+# checks if username and password match
+# returns True/False
 def authenticate(user, pwd):
     getting_username = f"SELECT user FROM users"
     command = c.execute(getting_username)
@@ -92,13 +101,17 @@ def authenticate(user, pwd):
         return True
 
 
+# finds latest entry id for user
+# adds 1 to it and prints
 def find_id(user):
     ex = c.execute(f"SELECT * FROM content WHERE user = '{user}'")
     allusers = ex.fetchall()
     num_id = len(allusers) + 1
     print(num_id)
-    
+    # return num_id
 
+
+# returns blog name for a user
 def ret_blog(user):
     getting_blog = f"SELECT blog_name FROM users WHERE '{user}' = user"
     command = c.execute(getting_blog)
@@ -111,7 +124,7 @@ def ret_blog(user):
     print(temp)
     return temp
 
-
+# returns html file for a user
 def ret_html(user):
     getting_html = f"SELECT html_file FROM users WHERE '{user}' = user"
     command = c.execute(getting_html)
@@ -130,30 +143,52 @@ def ret_title(user):
     command = c.execute(getting_username)
     usernames = command.fetchall()
     temp = str(usernames)
-    temp = temp[3:]
-    temp = temp[::-1]
-    temp = temp[4:]
-    temp = temp[::-1]
+    # temp = temp[3:]
+    # temp = temp[::-1]
+    # temp = temp[4:]
+    # temp = temp[::-1]
     print(temp)
-    return temp
-
+    return temp # returns array of all the titles
+ 
 
 def ret_paragraph(user):
     getting_paragraph = f"SELECT paragraph FROM content WHERE '{user}' = user"
     command = c.execute(getting_paragraph)
     paragraphs = command.fetchall()
     temp = str(paragraphs)
-    temp = temp[3:]
-    temp = temp[::-1]
-    temp = temp[4:]
-    temp = temp[::-1]
+    # temp = temp[3:]
+    # temp = temp[::-1]
+    # temp = temp[4:]
+    # temp = temp[::-1]
     print(temp)
-    return temp
+    return temp # returns array of all the paragraphs
+
+
+def ret_paragraph_maybe(user):
+    ex = c.execute(f"SELECT paragraph FROM content WHERE user = '{user}'")
+    allusers = ex.fetchall()
+    for x in range(len(allusers)):
+      allusers[x] = allusers[x][3:]
+      allusers[x] = allusers[x][::-1]
+      allusers[x] = allusers[x][4:]
+      allusers[x] = allusers[x][::-1]
+    print("about to print the cut allusers")
+    print(allusers)
+
+def ret_title_maybe(user): # returns all the titles for a user's blog
+    ex = c.execute(f"SELECT title FROM content WHERE user = '{user}'")
+    allusers = ex.fetchall()
+    
+    for x in range(len(allusers)):
+        print(allusers[x])
 
 
 def new_blog(html_file):
-    path = "/Users/katni/DEM_PUMPKINS/app/templates"
-    file_html = open(os.path.join(path, html_file), "w")
+    home_path = str(Path('~').expanduser()) + "/DEM_PUMPKINS/app/templates/"
+              # str(Path.home())
+              # str(os.path.expanduser('~'))
+    file_html = open(os.path.join(home_path, html_file), "w") # w stands for write
+    # this lets us write into the file
     file_html.write(
     '''
     <!DOCTYPE html>
@@ -173,12 +208,51 @@ def new_blog(html_file):
             <a href="/explore" name="explore" value="explore"><button>Explore</button></a>
             <!-- button to log out -->
             <a href="/logout" name="logout" value="Logout"><button>Logout</button></a>
+    ''')
 
-            <h2>{{title}}</h2>
-            <p>{{paragraph}}</p> 
+    list_titles = ret_title("mqiu30@stuy.edu")
+    list_paragraphs = ret_paragraph("mqiu30@stuy.edu")
+    for x in range(len(list_titles)):
+        temp = list_titles[x]
+        temp = temp[3:]
+        temp = temp[::-1]
+        temp = temp[4:]
+        temp = temp[::-1]
+        
+        p_temp = list_paragraphs[x]
+        p_temp = p_temp[3:]
+        p_temp = p_temp[::-1]
+        p_temp = p_temp[4:]
+        p_temp = p_temp[::-1]
+
+        file_html.write(
+        f'''
+        <hr>
+        <h2>{temp}</h2>
+        <p>{p_temp}</p>
+        ''')
+           
+    file_html.write(
+    '''
         </body>
     </html>'''
     )
+
+'''
+<hr> <!-- horizontal line -->
+<h2 class={{entry_id}}>{{title}}</h2>
+<p class={{entry_id}}>{{paragraph}}</p>
+
+- (above) String ??? that will be added upon every new entry
+
+old_text = soup.find("t", {"id": entry_id})
+  
+new_text = old_text.find(text=re.compile(
+    'Geeks For Geeks')).replace_with('Vinayak Rai')
+'''
+
+
+
 
 
 def add_entry(user, blog_name, html_file, entry_id, title, paragraph):

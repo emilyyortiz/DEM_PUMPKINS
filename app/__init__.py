@@ -16,6 +16,8 @@ from database import ret_blog
 from database import ret_html
 from database import ret_title
 from database import ret_paragraph
+from database import ret_title_maybe
+from database import ret_paragraph_maybe
 
 app = Flask(__name__)
 
@@ -85,17 +87,21 @@ def add_counter(counter1):
 
 @app.route("/user_blog")
 def user_blog():
-    temp = session['username'][0]
-    htmlfile = str(temp) + ".html"
-    b_name = ret_blog(temp)
-    t_name = ret_title(temp)
-    p_name = ret_paragraph(temp)
+    temp = session['username'][0] # username
+    htmlfile = str(temp) + ".html" # name of html file
+    b_name = ret_blog(temp) # blog name
+    # t_name = ret_title(temp) # title of entries
+    # p_name = ret_paragraph(temp) # paragraph name
     new_blog(htmlfile)
-    print(temp)
-    print(session['username'])
-    print(session['username'][0])
-    print(htmlfile)
-    return render_template(str(htmlfile), blogname=b_name, title=t_name, paragraph=p_name) # temp blog, will direct to each user's blog
+    # print(temp)
+    # print(session['username'])
+    # print(session['username'][0])
+    # print(htmlfile)
+    # t_name = "<h2 class=" + str(entry_id) + ">" + str(t_name) + "</h2>"
+    # p_name = "<p class=" + str(entry_id) + ">" + str(p_name) + "</p>"
+    # ret_title_maybe(temp)
+    # ret_paragraph_maybe(temp)
+    return render_template(str(htmlfile), blogname=b_name) #, title=t_name, paragraph=p_name) # temp blog, will direct to each user's blog
 
 
 @app.route("/create_entry", methods=['GET', 'POST'])
