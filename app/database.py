@@ -6,7 +6,6 @@
 
 ## use "?" as a replacement string in sqlite tables
 
-from bs4 import BeautifulSoup as bs
 from pathlib import Path
 import sqlite3 # enable control of an sqlite database
 import os
@@ -26,8 +25,8 @@ c.execute("CREATE TABLE users(user TEXT, pwd TEXT, blog_name TEXT, html_file TEX
 c.execute("DROP TABLE if exists content")
 c.execute("CREATE TABLE content(user TEXT, blog_name TEXT, html_file TEXT, entry_id TEXT, title TEXT, paragraph TEXT)")
 
-c.execute(f"INSERT into users VALUES('?', '?', '?', '?')")
-c.execute(f"INSERT into content VALUES('!', '!', '!', '!', '!', '!')")
+c.execute(f"INSERT into users VALUES('Elmo', '1234', 'All About Elmo', 'Elmo.html')")
+c.execute(f"INSERT into content VALUES('Elmo', 'All About Elmo', 'Elmo.html', '1', 'My First Post', 'This entry is hard coded.')")
 
 # used when a user is making an account
 # checks if username is available, returns True/False
@@ -273,12 +272,6 @@ def replace_entry(user, entry_id, title, paragraph):
 
 db.commit() # save changes
 authenticate("?", "?")
-# add_login("Adfafd","adffd","adfadsf","Adfa")
-# add_login("Adfafd","123","adfadsf","Adfad")
-
-# add_entry("Elmo", "Elmo.html", "0", "Elmo", "wah")
-# add_entry("Elmo", "Elmo.html", "1", "Elmo", "wah")
-# add_entry("adfa", "Elmo.html", "0", "Elmo", "wah")
 
 
 print("about to print users database")
