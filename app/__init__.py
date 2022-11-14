@@ -6,6 +6,7 @@
 
 from flask import Flask, render_template,request, redirect, session
 import os
+import atexit
 from database import check_login
 from database import add_login
 from database import authenticate
@@ -156,6 +157,16 @@ def explore():
      return render_template('explore.html')
 
 
+# def delete_html(some_argument):
+#     home_path = str(Path('~').expanduser()) + "/DEM_PUMPKINS/app/templates/"
+#               # str(Path.home())
+#               # str(os.path.expanduser('~'))
+#     file_html = open(os.path.join(home_path, html_file), "w")
+#     os.remove("demofile.txt")
+#     print(some_argument)
+
+
 if __name__ == "__main__":
+    #atexit.register(delete_html, 'some argument')
     app.debug = True
     app.run()
