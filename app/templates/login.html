@@ -2,8 +2,8 @@
   DEM PUMPKINS: Emily Ortiz, Diana Akhmedova, May Qiu
   SoftDev
   P00 -- Move Slowly and Fix Things
-  2022-11-09
-  time spent: 3.5 hours
+  2022-11-15
+  time spent: 25 hours
 -->
 
 <!DOCTYPE html>
@@ -11,21 +11,26 @@
 <html>
 
     <head>
-        <title>LOGIN PAGE</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+
+        <title>Login Page</title>
+        <link rel="stylesheet" href="/static/css/style.css" />
     </head>
 
     <body>
-        <h1>DEM PUMPKINS: Emily Ortiz, May Qiu, Diana Akhmedova</h1>
+        <h1></u>Login With Your Fabulous Details</u></h1>
 
-        <h3>Enter your username and password.</h3>
+        <h2>Enter your username and password.</h2>
 
         <form action="/login" method="post">
             <input type="text" name="username">
             <input type="text" name="password">
-            <input type="submit" name="sub1">
+            <input type="submit" name="sub1" class="sub">
         </form>
 
-        <p> {{ error_msg }} </p>
+        <h3>Please enter a correct username and password combination.</h3>
 
         <a href="/create_account" name="create_account" value="Create_Account"><button>Create Account</button></a>
     </body>

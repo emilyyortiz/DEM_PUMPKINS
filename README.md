@@ -6,7 +6,14 @@
 * Diana Akhmedova (Devo)
 
 ## Description of Website/App:
-PLACEHOLDER
+DEM BLOGS
+* A website that allows users to register and post blogs with multiple entries, as well as view the blogs of other users.
+* Features:
+    * Create Account
+    * Login/Logout
+    * Create Entry
+    * Edit Entry
+    * Explore Page
 
 ## Launch Codes:
 * ```git clone git@github.com:eortiz-30/DEM_PUMPKINS.git```

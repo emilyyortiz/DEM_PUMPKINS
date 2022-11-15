@@ -4,8 +4,8 @@ Emily Ortiz
 May Qiu
 pd 7
 ---------------------
-<Project Title/Description>
-
+DEM BLOGS
+A website that allows users to register and post blogs with multiple entries, as well as view the blogs of other users.
 
  ______   ______   __   __   __       ______   _______     
 /_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
@@ -190,9 +190,27 @@ All worked together
 added to devlog
 ==============================================================
 
-mayQ -- 2022-11-15 03:05
+mayQ -- 2022-11-15 03:10
 --------------------------------------------------------------
-All working together
+all working together
+got all functions working
+- edit entry doesn't work in firefox for some reason
+updated design doc
+cried
+==============================================================
+
+emilyO -- 2022-11-15 03:10
+--------------------------------------------------------------
+all working together
+got all functions working
+- edit entry doesn't work in firefox for some reason
+updated design doc
+cried
+==============================================================
+
+dianaA -- 2022-11-15 03:10
+--------------------------------------------------------------
+all working together
 got all functions working
 - edit entry doesn't work in firefox for some reason
 updated design doc

@@ -1,28 +1,13 @@
 # DEM PUMPKINS: Emily Ortiz, Diana Akhmedova, May Qiu
 # SoftDev
 # P00 -- Move Slowly and Fix Things
-# 2022-11-09
-# time spent: __ hours
+# 2022-11-15
+# time spent: 25 hours
 
 from flask import Flask, render_template,request, redirect, session
 import os
 import atexit
-from database import check_login
-from database import add_login
-from database import authenticate
-from database import find_id
-from database import add_id
-from database import new_blog
-from database import add_entry
-from database import ret_blog
-from database import ret_html
-from database import ret_title
-from database import ret_paragraph
-from database import ret_title_maybe
-from database import ret_paragraph_maybe
-from database import replace_entry
-from database import delete_html
-from database import render_explore
+from database import *
 
 app = Flask(__name__)
 
@@ -32,6 +17,7 @@ app.secret_key = os.urandom(32)
 
 user = "" # global var, meant to be inputed username later, doesn't work
 counter = 0 # global var, meant to be the number for the newest html file
+
 
 @app.route("/")
 def index():
@@ -59,7 +45,7 @@ def login():
         return redirect("/user_blog") # redirects to welcome, user is logged in and in session
 
     # if password is wrong or username is wrong
-    return render_template('login.html', error_msg="Please enter a correct username and password combination") # displays login page w/error_msg
+    return render_template('login.html') # displays login page 
 
 
 @app.route("/create_account", methods=['GET', 'POST'])
@@ -67,20 +53,19 @@ def create_account():
     username = request.form.get('username') # username user inputs on form
     password = request.form.get('password') # password user inputs on form
     blogname = request.form.get('blogname') # blog name user inputs on form
-    htmlfile = str(counter) + ".html" #???
 
     # if any field is empty
     if ((username == "") or (password == "") or (blogname == "")):
         return render_template( 'create_account.html', error_msg="Fill in any blank fields." ) # displays create_account page w/error_msg
     
     # if username is not unique / the same as another user's username (check in database)
-    if (check_login(username, password, blogname, htmlfile)):
+    if (check_login(username, password, blogname)):
         return render_template( 'create_account.html', error_msg="Username unavailable. Please pick a different username." ) # displays create_account page w/error_msg
     
     # username is unique
     if (request.method == 'POST'):
         if (request.form.get('sub1') == 'Submit'):
-            add_login(username, password, blogname, htmlfile)
+            add_login(username, password, blogname)
             add_counter(counter)
             return redirect("/login")
     return render_template('create_account.html', error_msg="") # displays login page
@@ -93,27 +78,15 @@ def add_counter(counter1):
 @app.route("/user_blog")
 def user_blog():
     temp = session['username'][0] # username
-    htmlfile = str(temp) + ".html" # name of html file
     b_name = ret_blog(temp) # blog name
-    # t_name = ret_title(temp) # title of entries
-    # p_name = ret_paragraph(temp) # paragraph name
-    new_blog(htmlfile, temp)
-    # print(temp)
-    # print(session['username'])
-    # print(session['username'][0])
-    # print(htmlfile)
-    # t_name = "<h2 class=" + str(entry_id) + ">" + str(t_name) + "</h2>"
-    # p_name = "<p class=" + str(entry_id) + ">" + str(p_name) + "</p>"
-    # ret_title_maybe(temp)
-    # ret_paragraph_maybe(temp)
-    return render_template(str(htmlfile), blogname=b_name) #, title=t_name, paragraph=p_name) # temp blog, will direct to each user's blog
+    new_blog(temp, 0) # writes user_blog.html w/ all entries for user
+    return render_template("user_blog.html", blogname=b_name) # will direct to logged in user's blog
 
 
 @app.route("/create_entry", methods=['GET', 'POST'])
 def create_entry():
     username = str(session['username'][0])
     blogname = ret_blog(username)
-    htmlfile = ret_html(username)
     title = request.form.get('title') # title user inputs on form
     print(title)
     entryid = add_id(username)
@@ -122,7 +95,7 @@ def create_entry():
     
     if (request.method == 'POST'):
         if (request.form.get('sub2') == 'Submit'):
-            add_entry(username, blogname, htmlfile, entryid, title, paragraph)
+            add_entry(username, blogname, entryid, title, paragraph)
             return redirect("/user_blog")
     return render_template('create_entry.html')
 
@@ -130,18 +103,14 @@ def create_entry():
 @app.route("/edit_entry")
 def edit_entry():
     username = str(session['username'][0])
-    htmlfile = username + ".html" # name of html file
     title = request.args.get('title') # title user inputs on form
-    #entryid = find_id((session['username'][0]))
     entryid = request.args.get('entry_id')
     paragraph = request.args.get('paragraph') # paragraph user inputs on form
 
     if (request.method == 'GET'):
         if (request.args.get('sub1') == 'Submit'):
             replace_entry(username, entryid, title, paragraph)
-    #         for x in range(len()):
-    #             add_entry(username, blogname, htmlfile, entryid, title, paragraph)
-            new_blog(htmlfile, username)
+            new_blog(username, 0)
             return redirect("/user_blog")
     return render_template("edit_entry.html")
 
@@ -152,14 +121,28 @@ def logout():
     print("user is NOT in session")
     return redirect("/login") # redirects to login page
 
-@app.route("/explore")
+
+@app.route("/explore", methods=['GET', 'POST'])
 def explore():
     username = str(session['username'][0])
-    render_explore(username)
+    write_explore(username)
+    user = request.form.get('user')
+    
+    if (request.method == 'POST'):
+        if ( int(find_id(username)) > 0 ):
+            new_blog(user, 1)
+            return redirect("/other_blog")
+            
     return render_template("explore.html")
 
 
+@app.route("/other_blog")
+def other_blog():
+    return render_template("user_blog.html")
+
+
 if __name__ == "__main__":
-    atexit.register(delete_html, 'user')
+    # atexit.register(delete_html) # runs delete_html after the flask app is closed
+    # atexit.register(db.commit())
     app.debug = True
     app.run()

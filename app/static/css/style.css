@@ -1,0 +1,95 @@
+/*
+  DEM PUMPKINS: Emily Ortiz, Diana Akhmedova, May Qiu
+  SoftDev
+  P00 -- Move Slowly and Fix Things
+  2022-11-15
+  time spent: 25 hours
+*/
+
+* {
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-family: "Quicksand", sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-margin-top: 20px;
+}
+
+main {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+body {
+    background-color: #cadae6;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+p {
+    font-size: 20px;
+}
+
+textarea {
+    color: #96bedc;
+    font-size: 25px;
+    font-family: "Quicksand", sans-serif;
+    margin-bottom: 0px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+    background-color: #d7e3ed;
+}
+
+text {
+    color: #96bedc;
+    font-size: 25px;
+    font-family: "Quicksand", sans-serif;
+    margin-bottom: 0px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+    background-color: #d7e3ed;
+}
+
+.sub {
+    font-size: 20px;
+}
+
+button {
+    font-size: 20px;
+}
+
+#entry {
+    text-align: left;
+    font-size: 25px;
+}
+
+#words {
+    text-align: left;
+    font-size: 15px;
+}
+
+ul {
+    list-style-type: none;
+    overflow: hidden;
+    margin: 0px;
+    padding: 10px;
+}
+
+hr {
+    height: 2px;
+    background-color: #66a1cf;
+    border: none;
+}
