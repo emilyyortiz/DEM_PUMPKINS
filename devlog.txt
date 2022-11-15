@@ -189,3 +189,12 @@ got create_entry working
 All worked together
 added to devlog
 ==============================================================
+
+mayQ -- 2022-11-15 03:05
+--------------------------------------------------------------
+All working together
+got all functions working
+- edit entry doesn't work in firefox for some reason
+updated design doc
+cried
+==============================================================
