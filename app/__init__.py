@@ -22,6 +22,7 @@ from database import ret_title_maybe
 from database import ret_paragraph_maybe
 from database import replace_entry
 from database import delete_html
+from database import render_explore
 
 app = Flask(__name__)
 
@@ -66,7 +67,7 @@ def create_account():
     username = request.form.get('username') # username user inputs on form
     password = request.form.get('password') # password user inputs on form
     blogname = request.form.get('blogname') # blog name user inputs on form
-    htmlfile = str(counter) + ".html"
+    htmlfile = str(counter) + ".html" #???
 
     # if any field is empty
     if ((username == "") or (password == "") or (blogname == "")):
@@ -151,11 +152,11 @@ def logout():
     print("user is NOT in session")
     return redirect("/login") # redirects to login page
 
-
-# Not in use yet:
 @app.route("/explore")
 def explore():
-     return render_template('explore.html')
+    username = str(session['username'][0])
+    render_explore(username)
+    return render_template("explore.html")
 
 
 if __name__ == "__main__":

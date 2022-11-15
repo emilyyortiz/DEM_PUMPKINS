@@ -27,6 +27,8 @@ c.execute("CREATE TABLE content(user TEXT, blog_name TEXT, html_file TEXT, entry
 
 c.execute(f"INSERT into users VALUES('Elmo', '1234', 'All About Elmo', 'Elmo.html')")
 c.execute(f"INSERT into content VALUES('Elmo', 'All About Elmo', 'Elmo.html', '1', 'My First Post', 'This entry is hard coded.')")
+c.execute(f"INSERT into users VALUES('mqiu30@stuy.edu', '1234', 'All About May', 'mqiu30@stuy.edu.html')")
+c.execute(f"INSERT into content VALUES('mqiu30@stuy.edu', 'All About May', 'mqiu30@stuy.edu.html', '1', 'My First Post', 'This entry is hard coded by May.')")
 
 # used when a user is making an account
 # checks if username is available, returns True/False
@@ -286,7 +288,59 @@ def delete_html(user):
         print(temp)
         file_html = os.path.join(home_path, temp)
         os.remove(file_html)
+
+def render_explore(user):
+    get_users = f"SELECT user FROM users WHERE '{user}' != user"
+    command = c.execute(get_users)
+    all_users = command.fetchall() # list of all users exept the one in session
+
+    get_blog_names = f"SELECT blog_name FROM content WHERE '{user}' != user"
+    command = c.execute(get_blog_names)
+    all_blog_names = command.fetchall() # list of all users' blog names exept the one in session
     
+    # FIX THIS PART SOOSSOS
+    # we need access to explore.html
+    home_path = str(Path('~').expanduser()) + "/DEM_PUMPKINS/app/templates/"
+    file_html = open(os.path.join(home_path, "explore.html"), "a") # a stands for append
+
+    # html_content = \
+    # '''
+    # <!DOCTYPE html>
+
+    # <html>
+
+    # <head>
+    #     <title>Explore Page</title>
+    # </head>
+
+    # <body>
+
+    #     <a href="/user_blog" name="userblog" value="userblog"><button>Return to Blog</button></a>
+    #     <a href="/logout" name="logout" value="Logout"><button>Logout</button></a>
+    #     <h3>Other's Blogs</h3>
+    #     <li>
+    # '''
+    html_content = ""
+
+    for x in range(len(all_users)):
+        name = all_blog_names[x]
+        other_users = all_users[x]
+        html_content += \
+        f'''
+        <ul><a href="/explore">{name} by {other_users}</a></ul>
+        '''
+
+    
+    html_content += \
+    '''
+        </li>
+        <p> You have read through all blogs on our website </p>
+    </body>
+
+    </html>
+    '''
+    file_html.write(html_content)
+
 
 db.commit() # save changes
 authenticate("?", "?")
