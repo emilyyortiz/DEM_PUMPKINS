@@ -7,6 +7,7 @@
 from flask import Flask, render_template,request, redirect, session
 import os
 import atexit
+import database
 from database import *
 
 app = Flask(__name__)
